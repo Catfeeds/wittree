@@ -144,7 +144,9 @@
                         $.toast(data.msg);
                     } else {
                         $.toast(data.msg);
-                        location.href = "{:url('customer/index')}";
+                        setInterval(function () {
+                            location.href = "{:url('customer/index')}";
+                        },3000)
                     }
                 }
             });

@@ -111,11 +111,12 @@
                         // yzmBtn = true;
                         $.toast(data.msg);
                         // location.href = ""
+                        return false;
                     } else {
                         $.toast(data.msg);
                         setInterval(function () {
                             location.href = "{:url('login/login')}";
-                        },3000)
+                        },2000)
                     }
                 }
             });

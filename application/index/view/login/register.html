@@ -111,14 +111,12 @@
                     if (data.code === -1) {
                         yzmBtn = true;
                         $.toast(data.msg);
-                        setInterval(function () {
-                            location.href = "{:url('login/register')}";
-                        }, 2500);
+                        return false;
                     } else {
                         $.toast(data.msg);
                         setInterval(function () {
                             location.href = "{:url('login/login')}";
-                        }, 3000);
+                        }, 2000);
                     }
                 }
             });

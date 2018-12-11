@@ -6,22 +6,12 @@ use app\index\model\CategoryModel;
 use app\index\model\CourseModel;
 use app\index\model\IntegralConfigModel;
 use app\index\model\NewsModel;
+use app\index\model\WeixinModel;
 use think\Controller;
 use Workerman\Lib\Timer;
 
 class Index extends Controller
 {
-//    public function add_timer()
-//    {
-//        Timer::add(1, array($this, 'index1'), array(), true);
-//    }
-//
-//
-//    public function index1()
-//    {
-//        Log::write(date("Y-m-d H:i:s"));
-//    }
-
     /**
      * 首页显示
      * @return mixed
@@ -31,31 +21,38 @@ class Index extends Controller
      */
     public function index()
     {
+        $Weixin = new WeixinModel();
         $where = [];
         if ($this->request->isGet()) {
             $param = input('param.');
             if (isset($param['id'])) {
                 $where['cat_id'] = $param['id'];
             }
+            if (!empty($param['code'])) {
+                $res = $Weixin->get_access_token($param['code']);
+                $userinfo = $Weixin->get_openid_userinfo($res['access_token'], $res['openid']);
+                halt($userinfo);
+            }
+            $res = $Weixin->code_shouquan();
+            $new = new NewsModel();
+            $cate = new CategoryModel();
+            $course = new CourseModel();
+            $new = new NewsModel();
+            $newdata = $new->select();
+            $integralconfig = new IntegralConfigModel();
+            $newList = $new->getNewsList(5);
+            $cateList = $cate->getCateList(10);
+            $where['status'] = 0;
+            $courseList = $course->getCourseList($where, 10);
+            $ingralconfigdata = $integralconfig->getIntegralData();
+            return $this->fetch('', [
+                'newlist' => $newList,
+                'catelist' => $cateList,
+                'courselist' => $courseList,
+                'integraldata' => $ingralconfigdata,
+                'newdata' => $newdata,
+            ]);
         }
-        $new = new NewsModel();
-        $cate = new CategoryModel();
-        $course = new CourseModel();
-        $new = new NewsModel();
-        $newdata = $new->select();
-        $integralconfig = new IntegralConfigModel();
-        $newList = $new->getNewsList(5);
-        $cateList = $cate->getCateList(10);
-        $where['status'] = 0;
-        $courseList = $course->getCourseList($where, 10);
-        $ingralconfigdata = $integralconfig->getIntegralData();
-        return $this->fetch('', [
-            'newlist' => $newList,
-            'catelist' => $cateList,
-            'courselist' => $courseList,
-            'integraldata' => $ingralconfigdata,
-            'newdata' => $newdata,
-        ]);
     }
 
     /**
@@ -92,7 +89,8 @@ class Index extends Controller
 
     }
 
-    public function isCourseData(){
+    public function isCourseData()
+    {
         if ($this->request->isAjax()) {
             $param = input('post.');
             $limit = $param['pageSize'];
@@ -104,7 +102,7 @@ class Index extends Controller
             $map['status'] = 0;
             $course = new CourseModel();
             $count = $course->getCourseListByCatIdCount($where, $offset, $limit);
-            if($count > $limit) {
+            if ($count > $limit) {
                 return json(['code' => 1, 'data' => '', '']);
             } else {
                 return json(['code' => -1, 'data' => '', '']);
@@ -215,7 +213,8 @@ class Index extends Controller
         }
     }
 
-    public function notice(){
+    public function notice()
+    {
         return $this->fetch();
     }
 

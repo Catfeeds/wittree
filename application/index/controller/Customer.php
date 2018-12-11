@@ -1191,11 +1191,11 @@ class Customer extends Base
                         return json(['code' => -1, 'data' => '', 'msg' => "抽奖次数已到上限！"]);
                     }
                     if ($lastSign !== $today) {
-                        if (($flag['se_num'] < $has['draw_num']) || ($flag['se_num'] == $has['draw_num'])) {
+                        if (($flag['se_num'] <= $has['draw_num']) || ($flag['se_num'] == $has['draw_num'])) {
                             return json(['code' => -1, 'data' => '', 'msg' => "抽奖次数已到上限！"]);
                         }
                     }
-                    $cdmodel->where("uid", $user->id)->update(array('draw_time' => $current, 'draw_num' => $count)); //签到表
+                    $cdmodel->where("uid", $user->id)->update(array('draw_time' => $current, 'draw_num' => $count)); //抽奖表
                 } else {
                     $count = 1;
                     $data['uid'] = $user->id;
@@ -1257,7 +1257,7 @@ class Customer extends Base
                 $data['type'] = 3;
                 $data['create_time'] = time();
                 $flag = $cuslog->save($data);
-                $res = $customer->where('id', $user->id)->setInc('integral', $param['integral']);
+                $res = $customer->where('id', $user->id)->setInc('integral', (int)$param['integral']);
                 $savedata['uid'] = $user->id;
                 $savedata['desc'] = $user->username . "抽奖获得" . $param['integral'] . "分";
                 $savedata['create_time'] = time();
