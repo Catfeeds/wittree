@@ -1,0 +1,67 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:88:"D:\phpStudy\PHPTutorial\WWW\wittree\public/../application/index\view\customer\tishi.html";i:1543909113;}*/ ?>
+<!DOCTYPE html>
+<html style="font-size: 20px">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>添加地址</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+    <link rel="stylesheet" href="/static/index/javaScript/layui/css/layui.css"/>
+    <script src="/static/index/javaScript/layui/layui.js"></script>
+    <script src="/static/index/javaScript/public.js"></script>
+    <link rel="stylesheet" href="/static/index/css/public.css"/>
+    <!--<link rel="stylesheet" href="/static/index/css/shenfen.css"/>-->
+    <style>
+        html,body{
+            background-color: #FFFFFF;
+        }
+        .them{
+            margin-top: 2.2rem;
+            overflow: hidden;
+        }
+        .them img{
+           display: block;
+            width: 3rem ;
+            height: 3rem;
+            margin: 1rem auto 0 auto;
+        }
+        .them .tishi{
+            text-align: center;
+            padding-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+<header class="bar bar-nav">
+    <a class="button button-link button-nav pull-left" data-transition='slide-out'>
+        <span class="icon icon-left" style="color: #000" onclick="gofu()"></span>
+    </a>
+    <!--<a class="pull-right" href="javascript:void(0)" style="color: #000;font-size: 0.8rem;margin-top: 0.5rem;position: relative;z-index: 999999">提交</a>-->
+    <h1 class="title">提示</h1>
+</header>
+<div class="them">
+    <img src="/static/index/images/duih.png" alt=""/>
+    <p class="tishi">成功，<span class="number">3</span>秒后跳转到地址列表</p>
+</div>
+<script>
+var number = 3;
+    setInterval(function(){
+        number--;
+        $(".number").html(number);
+        if(number===0){
+            location.href = "<?php echo url('customer/myaddress'); ?>"
+        }
+    },1000)
+
+
+</script>
+</body>
+</html>

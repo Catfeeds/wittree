@@ -1,0 +1,9 @@
+SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE IF EXISTS `wit_sign`;
+CREATE TABLE `wit_sign` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `num` tinyint(4) NOT NULL,
+  `yun` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户签到表';
+

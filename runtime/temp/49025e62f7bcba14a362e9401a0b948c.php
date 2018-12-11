@@ -1,0 +1,254 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"D:\phpStudy\PHPTutorial\WWW\wittree\public/../application/index\view\customer\draw.html";i:1544268735;}*/ ?>
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>抽奖</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+    <script src="/static/index/javaScript/layui/layui.js"></script>
+    <script src="/static/index/javaScript/public.js"></script>
+    <script src="/static/index/javaScript/dist/js/swiper.min.js"></script>
+    <link rel="stylesheet" href="/static/index/css/register.css"/>
+    <link rel="stylesheet" href="/static/index/css/public.css"/>
+
+    <style>
+        body, html {
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            width: 100%;
+            height: 110%;
+            overflow: visible;
+        }
+
+        .beijing {
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin-top: 2.2rem;
+        }
+
+        .them-box img {
+            width: 3rem;
+            height: 3.5rem;
+            display: block;
+            margin: -9rem auto 0 auto;
+            position: relative;
+        }
+
+        .them-box .pan {
+            width: 14rem;
+            height: 14rem;
+            border-radius: 50%;
+            transition: all 3s;
+            transition-timing-function: ease;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            margin: 8rem auto 0 auto;
+            z-index: 11;
+        }
+
+        .jiang-list {
+            width: 15rem;
+            height: 7rem;
+            background-color: #dee9af;
+            margin: 6.5rem auto 0 auto;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .jiang-list .jiang-title {
+            width: 5rem;
+            height: 1.5rem;
+            text-align: center;
+            background-color: #04babe;
+            line-height: 1.5rem;
+            color: #ffffff;
+            margin: 0.4rem auto 0 auto;
+            border-radius: 0.2rem;
+        }
+
+        .jiang-list .jiang-list-box {
+            overflow: hidden;
+            margin-top: 0.2rem;
+            height: 5rem;
+        }
+
+        .jiang-list .jiang-list-box p {
+            margin: 0.1rem 0 0 0;
+            font-size: 0.7rem;
+            text-align: center;
+        }
+
+        .pan .content {
+            text-align: center;
+        }
+
+        .pan .content p {
+            text-align: center;
+            margin-top: 1.2rem;
+            color: #FFFFFF;
+        }
+
+        .pan .content img {
+            margin-top: -0.8rem;
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .pan .content:nth-child(1) {
+            transform: rotate(60deg);
+        }
+
+        .pan .content:nth-child(2) {
+            transform: rotate(120deg);
+        }
+
+        .pan .content:nth-child(3) {
+            transform: rotate(180deg);
+        }
+
+        .pan .content:nth-child(4) {
+            transform: rotate(240deg);
+        }
+
+        .pan .content:nth-child(5) {
+            transform: rotate(300deg);
+        }
+    </style>
+</head>
+<body>
+<header class="bar bar-nav">
+    <a class="button button-link button-nav pull-left" data-transition='slide-out'>
+        <span class="icon icon-left" style="color: #000" onclick="gofu()"></span>
+    </a>
+    <h1 class="title">抽奖</h1>
+</header>
+
+<div class="beijing" style="background-image: url('/static/index/images/chou-bei.png')">
+    <div class="them-box">
+        <div class="pan"
+             style="background-image: url('/static/index/images/dapan.png');position: relative;z-index: 8888">
+            <?php if(is_array($data) || $data instanceof \think\Collection || $data instanceof \think\Paginator): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+            <div class="content">
+                <p><?php echo $v['title']; ?></p>
+                <img <?php if($v['title'] == '谢谢参与'): ?>src="/static/index/images/xiao.png"
+                     <?php else: ?>src="/static/index/images/qian.png" <?php endif; ?> alt=""/>
+            </div>
+            <?php endforeach; endif; else: echo "" ;endif; ?>
+            <!--<div class="content">-->
+            <!--<p>谢谢惠顾</p>-->
+            <!--<img src="/static/index/images/xiao.png" alt=""/>-->
+            <!--</div>-->
+            <!--<div class="content">-->
+            <!--<p>50积分</p>-->
+            <!--<img src="/static/index/images/qian.png" alt=""/>-->
+            <!--</div>-->
+            <!--<div class="content">-->
+            <!--<p>50积分</p>-->
+            <!--<img src="/static/index/images/qian.png" alt=""/>-->
+            <!--</div>-->
+            <!--<div class="content">-->
+            <!--<p>50积分</p>-->
+            <!--<img src="/static/index/images/qian.png" alt=""/>-->
+            <!--</div>-->
+            <!--<div class="content">-->
+            <!--<p>50积分</p>-->
+            <!--<img src="/static/index/images/qian.png" alt=""/>-->
+            <!--</div>-->
+        </div>
+        <img src="/static/index/images/zhou-btn.png" class="yuan-btn" style="position: relative;z-index: 9999" alt=""/>
+    </div>
+
+    <div class="jiang-list">
+        <div class="jiang-title">获奖信息</div>
+        <div class="jiang-list-box">
+            <div class="dong">
+                <?php if(is_array($drawnew) || $drawnew instanceof \think\Collection || $drawnew instanceof \think\Paginator): $i = 0; $__LIST__ = $drawnew;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                <p><?php echo $v['desc']; ?> <?php echo $v['create_time']; ?></p>
+                <?php endforeach; endif; else: echo "" ;endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<script src="/static/index/javaScript/jquery.js"></script>-->
+<script>
+    var topfu =0;
+
+    setInterval(function(){
+        topfu+=1;
+        $(".dong").css("marginTop",-topfu+"px");
+        if(parseInt($(".dong").css("height"))+parseInt($(".dong").css("marginTop")) === parseInt($(".jiang-list-box").css("height"))){
+            $(".dong").css("marginTop",0);
+            topfu=0;
+        }
+    },20);
+
+    $(function () {
+
+        var jiangArr;
+        $(".yuan-btn").one("click", function () {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo url('customer/draw'); ?>",
+                data: {},
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code === -1) {
+                        $.toast(data.msg);
+                        setInterval(function () {
+                            window.location.reload();
+                        }, 5000);
+                    } else {
+                        jiangArr = data.data;
+                        $(".pan").css("transform", "rotate(" + (-2520 - (jiangArr.prize_site + 1) * 60) + "deg)");
+                        setTimeout(function () {
+                            if (jiangArr.prize_name == "谢谢参与") {
+                                $.toast(jiangArr.prize_name);
+                            } else {
+                                $.toast("恭喜你获取" + jiangArr.prize_name);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: "<?php echo url('customer/savedrawlog'); ?>",
+                                data: {
+                                    'integral': jiangArr.integral
+                                },
+                                async: false,
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data.code == 0) {
+                                        setInterval(function () {
+                                            window.location.reload();
+                                        }, 4000);
+                                    } else {
+                                        $.toast("抽奖失败！请重试")
+                                    }
+                                }
+                            })
+                        }, 3500);
+                    }
+                }
+            });
+
+        });
+
+
+    })
+
+
+</script>
+</body>
+</html>

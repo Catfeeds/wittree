@@ -1,0 +1,117 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:91:"D:\phpStudy\PHPTutorial\WWW\wittree\public/../application/index\view\customer\check_id.html";i:1543893660;}*/ ?>
+<!DOCTYPE html>
+<html style="font-size: 20px">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>身份验证</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+    <link rel="stylesheet" href="/static/index/javaScript/layui/css/layui.css"/>
+    <script src="/static/index/javaScript/layui/layui.js"></script>
+    <script src="/static/index/javaScript/public.js"></script>
+    <link rel="stylesheet" href="/static/index/css/public.css"/>
+    <link rel="stylesheet" href="/static/index/css/shenfen.css"/>
+
+</head>
+<body>
+<header class="bar bar-nav">
+    <a class="button button-link button-nav pull-left" data-transition='slide-out'>
+        <span class="icon icon-left" style="color: #000" onclick="gofu()"></span>
+    </a>
+    <a class="pull-right" href="javascript:void(0)"
+       style="color: #000;font-size: 0.8rem;margin-top: 0.5rem;position: relative;z-index: 999999">提交</a>
+    <h1 class="title">身份验证</h1>
+</header>
+<div class="them">
+    <p><input type="text" placeholder="输入真实姓名" class="name-p"/></p>
+    <p><input type="text" placeholder="输入有效身份证号码" class="sf-ma" maxlength="22"/></p>
+    <p class="sf-title"><span> 身份证证件照:</span></p>
+    <div class="layui-upload">
+        <button type="button" class="layui-btn" id="test1">+</button>
+        <div class="layui-upload-list">
+            <input name="url" id="thumbnail" type="hidden"/>
+            <img class="layui-upload-img" id="demo1">
+        </div>
+        <img src="/static/index/images/shili.png" class="shili" alt=""/>
+    </div>
+    <p class="tishiyu">请上传本人手持证件照，证件上的信息无遮挡、清晰可见</p>
+</div>
+<script>
+    // $('.them p input').on('keyup mouseout input', function () {
+    //     var $this = $(this);
+    //     var v = $this.val();
+    //     /\S{5}/.test(v) && $this.val(v.replace(/\s/g, '').replace(/(.{4})/g, "$1 "));
+    // });
+    var themp = ""
+    layui.use('upload', function () {
+        var $ = layui.jquery
+            , upload = layui.upload;
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            , url: "<?php echo url('customer/uploadcheckid'); ?>"
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                    $("#test1").css("display", "mone");
+                    $(".shili").css("display", "mone");
+                    $("#demo1").css("display", "block");
+                });
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                }
+                themp = res[0];
+                $("#thumbnail").val(res.data.src);
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+    });
+
+    $("header .pull-right").bind("click", function () {
+        // if ($(".name-p").val() && $(".name-p").val().length === 10) {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo url('customer/checkId'); ?>",
+                data: {
+                    real_name: $(".name-p").val(),
+                    id_number: $(".sf-ma").val(),
+                    id_url: $("#thumbnail").val(),
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.code === -1) {
+                        $.toast(data.msg);
+                    } else {
+                        $.toast(data.msg);
+                        location.href="<?php echo url('customer/index'); ?>";
+                    }
+                }
+            });
+        // } else {
+        //     $.toast("请确认个人信息是否正确")
+        // }
+    })
+
+
+</script>
+</body>
+</html>

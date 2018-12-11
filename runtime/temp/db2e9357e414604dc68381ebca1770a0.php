@@ -1,0 +1,99 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:94:"D:\phpStudy\PHPTutorial\WWW\wittree\public/../application/index\view\customer\update_pass.html";i:1544265415;}*/ ?>
+<!DOCTYPE html>
+<html style="font-size: 20px">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>修改密码</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+    <link rel="stylesheet" href="/static/index/javaScript/layui/css/layui.css"/>
+    <script src="/static/index/javaScript/layui/layui.js"></script>
+    <script src="/static/index/javaScript/public.js"></script>
+    <link rel="stylesheet" href="/static/index/css/public.css"/>
+    <!--<link rel="stylesheet" href="/static/index/css/shenfen.css"/>-->
+    <style>
+        html, body {
+            background-color: #FFFFFF;
+        }
+
+        .them {
+            margin-top: 2.2rem;
+            background-color: #FFFFFF;
+        }
+
+        .them p {
+            border-bottom: 1px solid #f3f3f3;
+        }
+
+        .them p input {
+            height: 2.5rem;
+            border: none;
+            width: 100%;
+            padding: 0 1rem;
+        }
+
+        .them .text {
+            border-bottom: none;
+            padding: 0.5rem 1rem;
+        }
+    </style>
+</head>
+<body>
+<header class="bar bar-nav">
+    <a class="button button-link button-nav pull-left" data-transition='slide-out'>
+        <span class="icon icon-left" style="color: #000" onclick="gofu()"></span>
+    </a>
+    <a class="pull-right" href="javascript:void(0)"
+       style="color: #000;font-size: 0.8rem;margin-top: 0.5rem;position: relative;z-index: 999999">提交</a>
+    <h1 class="title">修改密码</h1>
+</header>
+<div class="them">
+    <p><input type="password" class="sh-name" placeholder="输入旧密码"/></p>
+    <p><input type="password" class="sh-name1" placeholder="设置新密码"/></p>
+    <p><input type="password" class="sh-name2" value="" placeholder="确认新密码"/></p>
+    <p class="text">设置密码请输入字母和数字的组合，不少于8位字符</p>
+
+</div>
+<script>
+
+
+    $("header .pull-right").bind("click", function () {
+        if ($(".sh-name1").val().length >8  && $(".sh-name1").val().length > 8) {
+            console.log($(".sh-name1").val())
+            console.log($(".sh-name2").val())
+            $.ajax({
+                type: "POST",
+                url: "<?php echo url('customer/updatepass'); ?>",
+                data: {
+                    uid : "<?php echo $uid; ?>",
+                    lastpass: $(".sh-name").val(),
+                    password1: $(".sh-name1").val(),
+                    password2: $(".sh-name2").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.code === -1) {
+                        $.toast(data.msg);
+                    } else {
+                        $.toast(data.msg);
+                        location.href = "<?php echo url('login/login'); ?>";
+                    }
+                }
+            });
+        } else {
+            $.toast("请确认密码一致")
+        }
+    })
+
+
+</script>
+</body>
+</html>

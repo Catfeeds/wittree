@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html style="font-size: 20px">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>手机号码登录</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+    <script src="/static/index/javaScript/public.js"></script>
+    <link rel="stylesheet" href="/static/index/css/register.css"/>
+    <link rel="stylesheet" href="/static/index/css/public.css"/>
+</head>
+<body>
+<header class="bar bar-nav">
+    <a class="button button-link button-nav pull-left" data-transition='slide-out'>
+        <span class="icon icon-left" style="color: #000" onclick="gofu()"></span>
+    </a>
+    <h1 class="title">智慧树</h1>
+</header>
+<nav>
+    <img src="/static/index/images/9B4DB0F9-EF78-41b2-B0D0-26D489764EB5.png" class="name-img" alt=""/>
+    <p class="dl-text">找回密码</p>
+    <div class="inputs-from">
+        <img src="/static/index/images/tell.png" alt=""/>
+        <input type="number" class="tell-number" placeholder="请输入注册手机号"/>
+    </div>
+    <div class="inputs-from2">
+        <img src="/static/index/images/yzm.png" alt=""/>
+        <input type="number" class="yzm-box" placeholder="请输入验证码"/>
+        <button class="yzm-btn">验证码</button>
+    </div>
+    <div class="inputs-from inputs-from1">
+        <img src="/static/index/images/ps.png" alt=""/>
+        <input type="password" class="password" placeholder="请设置新密码"/>
+    </div>
+    <div class="inputs-from inputs-from3">
+        <img src="/static/index/images/ps.png" alt=""/>
+        <input type="password" class="password2" placeholder="请确认新密码"/>
+    </div>
+    <button class="sign-btn">找回密码</button>
+</nav>
+<div class="xia-wx">
+    <hr/>
+    <div class="wx-title">快速登录</div>
+    <p class="qt-title">其他登录方式</p>
+    <a href="#"><img src="/static/index/images/wx.png" alt=""/></a>
+</div>
+
+
+<script>
+    //--------发送验证码
+    // var yzmBtn = true;
+    // $(".yzm-btn").click(function () {
+    //     var that =$(this) ;
+    //     if($(".tell-number").val().length===11){
+    //         if(yzmBtn){
+    //             $.ajax({
+    //                 type:"POST",
+    //                 url:"{:url('login/savepass')}",
+    //                 data:{
+    //                     tell:$(".tell-number").val()
+    //                 },
+    //                 dataType: "json",
+    //                 success: function(data) {
+    //                     if(data.code===-1){
+    //                         yfyzm = false;
+    //                         that.css({
+    //                             backgroundColor:"#ccc",
+    //                             color:"#fff"
+    //                         });
+    //                         that.html("已发送");
+    //                         $.toast(data.msg);
+    //                     }else{
+    //                         $.toast(data.msg);
+    //                     }
+    //                 }
+    //             });
+    //         }else{
+    //             $.toast("验证码已发送");
+    //         }
+    //     }else{
+    //         $.toast("请确认手机号码");
+    //     }
+    // });
+
+
+    //--------登录
+    $(".sign-btn").click(function () {
+        // if(!yzmBtn && $(".yzm-box").val().length===6){
+        if ($(".password").val() === $(".password2").val()) {
+            $.ajax({
+                type: "POST",
+                url: "{:url('login/savepass')}",
+                data: {
+                    phone: $(".tell-number").val(),
+                    // verify:$(".yzm-box").val(),
+                    password: $(".password").val(),
+                    password2: $(".password2").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    if (data.code === -1) {
+                        // yzmBtn = true;
+                        $.toast(data.msg);
+                        // location.href = ""
+                    } else {
+                        $.toast(data.msg);
+                        setInterval(function () {
+                            location.href = "{:url('login/login')}";
+                        },3000)
+                    }
+                }
+            });
+        } else {
+            $.toast("两次密码不一致");
+        }
+
+        // }else{
+        //     $.toast("请输入正确的验证码");
+        // }
+    })
+
+
+</script>
+</body>
+</html>

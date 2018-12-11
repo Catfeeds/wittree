@@ -1,0 +1,148 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:94:"D:\phpStudy\PHPTutorial\WWW\wittree\public/../application/index\view\customer\mybuycourse.html";i:1544270783;}*/ ?>
+<!DOCTYPE html>
+<html style="font-size: 20px">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我的课程</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+    <script src="/static/index/javaScript/public.js"></script>
+    <link rel="stylesheet" href="/static/index/css/public.css"/>
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+
+        }
+        .ke-list{
+            margin-top: 2.2rem;
+            background-color: #FFFFFF;
+        }
+      .ke-title{
+          padding: 0.3rem 0.5rem;
+      }
+        .class{
+            background-color: #ffffff;
+            margin-bottom: 2.3rem;
+        }
+        .class-title{
+            margin: 0;
+            padding: 0.5rem;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            background-color: #ffffff;
+
+        }
+        .class .class-list{
+            margin-left: 0.8rem;
+
+        }
+        .class .class-list .class-list-box{
+            margin-top: 0.5rem;
+        }
+        .class .class-list .class-list-box:first-child{
+            margin-top: 0;
+        }
+        .class .class-list .class-list-box img{
+            width: 4rem;
+            height: 4rem;
+            float: left;
+            border-radius: 0.5rem;
+        }
+        .class .class-list .class-list-box p{
+            vertical-align: top;
+            margin: 0.3rem 0 0 0;
+            font-size: 0.75rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+        .class .class-list .class-list-box .right-list{
+            float: left;
+            width: 73%;
+            border-bottom: 1px solid #ededed;
+            padding-bottom: 1.2rem;
+        }
+        .class .class-list:last-child .class-list-box .right-list{
+            border: none;
+        }
+        .class .class-list .class-list-box .list-title2{
+            font-size: 0.65rem;
+            color: #919191;
+            margin-top: 0.2rem;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+
+        }
+        .class .class-list .class-list-box .list-title{
+            font-size: 0.8rem;
+            position: relative;
+        }
+        .class .class-list .class-list-box .list-title .keshi{
+            font-size: 0.6rem;
+            color: #919191;
+           vertical-align: middle;
+        }
+        .class .class-list .class-list-box .list-title .titles{
+            display: inline-block;width: 46%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: bottom;
+            color: #000;
+        }
+        .class .class-list .class-list-box .list-title a{
+            position: absolute;right: 0;
+            top: -0.5rem;
+            height: 1.5rem;
+            width: 2.5rem;
+            background-color: #fadf4a;
+            font-size: 0.75rem;
+            text-align: center;
+            color: #000000;
+            line-height: 1.5rem;
+            border-radius: 0.3rem;
+
+        }
+    </style>
+</head>
+<body>
+<header class="bar bar-nav">
+    <a class="button button-link button-nav pull-left" data-transition='slide-out'>
+        <span class="icon icon-left" style="color: #000" onclick="gofu()"></span>
+    </a>
+    <h1 class="title">我的课程</h1>
+</header>
+<div class="ke-list">
+    <p class="ke-title">课程列表</p>
+    <div class="class">
+        <?php if(is_array($orderdata) || $orderdata instanceof \think\Collection || $orderdata instanceof \think\Paginator): $i = 0; $__LIST__ = $orderdata;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+        <div class="class-list clearfix">
+            <a href="<?php echo url('Customer/buycourselist',array('course_id'=>$v['course_id'])); ?>">
+            <div class="class-list-box clearfix">
+                <img src="<?php echo $v['thumb']; ?>" alt=""/>
+                <div class="right-list">
+                    <p class="list-title"><span class="titles"><?php echo $v['title']; ?> </span><span class="keshi"><?php echo $v['status']; ?></span> </p>
+                    <p class="list-title2"><?php echo $v['desc']; ?></p>
+                </div>
+            </div>
+            </a>
+        </div>
+        <?php endforeach; endif; else: echo "" ;endif; ?>
+    </div>
+</div>
+<script>
+
+</script>
+</body>
+</html>
