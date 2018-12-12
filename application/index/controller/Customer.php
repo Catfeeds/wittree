@@ -166,7 +166,6 @@ class Customer extends Base
     {
         $user = $this->account;
         $url = "http://" . $_SERVER["SERVER_NAME"] . "/index/login/register?uid={$user->id}";
-        halt($url);
         $url = $this->create_code($url);
         $this->assign('url', $url);
         return $this->fetch();
@@ -811,7 +810,7 @@ class Customer extends Base
                     } elseif ($data[$k]['key'] == 3) {
                         $data[$k]['rankstr'] = "<img src=\"/static/index/images/p3.png\" class=\"p\" alt=\"\"/>";
                     } else {
-                        $data[$k]['rankstr'] = " <span class=\"number-p\">{$data[$k]['key']}</span>";
+                        $data[$k]['rankstr'] = " <span class=\"number-p rank-number\">{$data[$k]['key']}</span>";
                     }
                 }
             } elseif ($param['type'] == 1) {
@@ -832,7 +831,10 @@ class Customer extends Base
                     } elseif ($data[$k]['key'] == 3) {
                         $data[$k]['rankstr'] = "<img src=\"/static/index/images/p3.png\" class=\"p\" alt=\"\"/>";
                     } else {
-                        $data[$k]['rankstr'] = " <span class=\"number-p\">{$data[$k]['key']}</span>";
+                        $data[$k]['rankstr'] = " <span class=\"number-p rank-number\">{$data[$k]['key']}</span>";
+                    }
+                    if ($v['integral'] == "") {
+                        $data[$k]['integral'] = 0;
                     }
                 }
             } elseif ($param['type'] == 2) {
@@ -856,7 +858,7 @@ class Customer extends Base
                     } elseif ($data[$k]['key'] == 3) {
                         $data[$k]['rankstr'] = "<img src=\"/static/index/images/p3.png\" class=\"p\" alt=\"\"/>";
                     } else {
-                        $data[$k]['rankstr'] = " <span class=\"number-p\">{$data[$k]['key']}</span>";
+                        $data[$k]['rankstr'] = " <span class=\"number-p rank-number\">{$data[$k]['key']}</span>";
                     }
                 }
             } else {
@@ -880,7 +882,7 @@ class Customer extends Base
                     } elseif ($data[$k]['key'] == 3) {
                         $data[$k]['rankstr'] = "<img src=\"/static/index/images/p3.png\" class=\"p\" alt=\"\"/>";
                     } else {
-                        $data[$k]['rankstr'] = " <span class=\"number-p\">{$data[$k]['key']}</span>";
+                        $data[$k]['rankstr'] = " <span class=\"number-p rank-number\">{$data[$k]['key']}</span>";
                     }
                 }
             }
@@ -1045,34 +1047,34 @@ class Customer extends Base
         $user = $this->account;
         $uid = $user->id;
         $data = Db::query("SELECT T3.*, (T3.JZJ - T3.JJS) YJ\n" .
-            "  FROM (SELECT WIT_CUSTOMER_LOG.*,\n" .
+            "  FROM (SELECT wit_customer_log.*,\n" .
             "               CASE\n" .
             "                 WHEN TYPE = 2 THEN\n" .
             "                 CONCAT('+',INTEGRAL)\n" .
             "               END JEJL,\n" .
             "               (SELECT SUM(T1.INTEGRAL)\n" .
-            "                  FROM WIT_CUSTOMER_LOG T1\n" .
+            "                  FROM wit_customer_log T1\n" .
             "                 WHERE T1.UID = '" . $uid . "'\n" .
             "                   AND T1.TYPE = 2\n" .
-            "                   AND T1.CREATE_TIME <= WIT_CUSTOMER_LOG.CREATE_TIME) JZJ,\n" .
+            "                   AND T1.CREATE_TIME <= wit_customer_log.CREATE_TIME) JZJ,\n" .
             "               CASE\n" .
             "                 WHEN (SELECT SUM(T2.INTEGRAL)\n" .
-            "                         FROM WIT_CUSTOMER_LOG T2\n" .
+            "                         FROM wit_customer_log T2\n" .
             "                        WHERE T2.UID = '" . $uid . "'\n" .
             "                          AND T2.TYPE = 2\n" .
-            "                          AND T2.CREATE_TIME <= WIT_CUSTOMER_LOG.CREATE_TIME) IS NULL THEN\n" .
+            "                          AND T2.CREATE_TIME <= wit_customer_log.CREATE_TIME) IS NULL THEN\n" .
             "                  0\n" .
             "                 ELSE\n" .
             "                  (SELECT SUM(T2.INTEGRAL)\n" .
-            "                     FROM WIT_CUSTOMER_LOG T2\n" .
+            "                     FROM wit_customer_log T2\n" .
             "                    WHERE T2.UID = '" . $uid . "'\n" .
             "                      AND T2.TYPE = 2\n" .
-            "                      AND T2.CREATE_TIME <= WIT_CUSTOMER_LOG.CREATE_TIME)\n" .
+            "                      AND T2.CREATE_TIME <= wit_customer_log.CREATE_TIME)\n" .
             "               END JJS\n" .
-            "          FROM WIT_CUSTOMER_LOG\n" .
-            "         WHERE WIT_CUSTOMER_LOG.UID = '" . $uid . "'\n" .
-            "         AND WIT_CUSTOMER_LOG.TYPE = 2\n" .
-            "         ORDER BY WIT_CUSTOMER_LOG.CREATE_TIME DESC) T3"
+            "          FROM wit_customer_log\n" .
+            "         WHERE wit_customer_log.UID = '" . $uid . "'\n" .
+            "         AND wit_customer_log.TYPE = 2\n" .
+            "         ORDER BY wit_customer_log.CREATE_TIME DESC) T3"
         );
         return $this->fetch('', [
             'data' => $data,
@@ -1133,7 +1135,7 @@ class Customer extends Base
                 } elseif ($data[$k]['key'] == 3) {
                     $data[$k]['rankstr'] = "<img src=\"/static/index/images/p3.png\" class=\"p\" alt=\"\"/>";
                 } else {
-                    $data[$k]['rankstr'] = " <span class=\"number-p\">{$data[$k]['key']}</span>";
+                    $data[$k]['rankstr'] = " <span class=\"number-p rank-number\">{$data[$k]['key']}</span>";
                 }
             }
             if (!empty($data)) {
