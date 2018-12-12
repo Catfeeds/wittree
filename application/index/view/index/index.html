@@ -111,7 +111,7 @@
 <nav class="nav">
     <a href="{:url('customer/compound')}">
         <img src="/static/index/images/zhu2.png" alt=""/>
-        <p>复利</p>
+        <p>受益</p>
     </a>
     <a href="{:url('index/index')}" class="tab-active">
         <img src="/static/index/images/home2.png" alt=""/>
@@ -248,8 +248,8 @@
                 async: false,
                 success: function (result) {
                     if (result.code == -1) {
+                        $.toast(result.msg);
                         setTimeout(function () {
-                            $.toast(result.msg);
                             location.href = "{:url('login/login')}";
                             return false;
                         }, 2000);

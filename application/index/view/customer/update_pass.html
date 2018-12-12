@@ -81,9 +81,12 @@
                 success: function (data) {
                     if (data.code === -1) {
                         $.toast(data.msg);
+                        return false;
                     } else {
                         $.toast(data.msg);
-                        location.href = "{:url('login/login')}";
+                        setInterval(function () {
+                            location.href = "{:url('login/login')}";
+                        },2000)
                     }
                 }
             });

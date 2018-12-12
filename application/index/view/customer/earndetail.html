@@ -29,17 +29,17 @@
     <div class="mx-List">
         {volist name="data" id="v"}
         <li>
-            <p class="clearfix"><span>收益</span> <span>{$v['JEJL']}</span></p>
+            <p class="clearfix"><span>返利</span> <span>{$v['JEJL']}</span></p>
             <p  class="clearfix"><span>{$v['create_time']|date="Y-m-d",###}</span> <span>{$v['integral']}</span></p>
         </li>
         {/volist}
     </div>
     <!-- 加载提示符 -->
-    <div class="infinite-scroll-preloader">
-        <div class="preloader"></div>
-    </div>
+    <!--<div class="infinite-scroll-preloader">-->
+        <!--<div class="preloader"></div>-->
+    <!--</div>-->
 <script>
-    var navOffset=$(".bar").offset().top;
+    // var navOffset=$(".bar").offset().top;
     // var number=1;
     // var falg=true;
     // var html='';

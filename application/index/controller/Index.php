@@ -28,12 +28,12 @@ class Index extends Controller
             if (isset($param['id'])) {
                 $where['cat_id'] = $param['id'];
             }
-            if (!empty($param['code'])) {
-                $res = $Weixin->get_access_token($param['code']);
-                $userinfo = $Weixin->get_openid_userinfo($res['access_token'], $res['openid']);
-                halt($userinfo);
-            }
-            $res = $Weixin->code_shouquan();
+//            if (!empty($param['code'])) {
+//                $res = $Weixin->get_access_token($param['code']);
+//                $userinfo = $Weixin->get_openid_userinfo($res['access_token'], $res['openid']);
+//                halt($userinfo);
+//            }
+//            $res = $Weixin->code_shouquan();
             $new = new NewsModel();
             $cate = new CategoryModel();
             $course = new CourseModel();

@@ -58,6 +58,9 @@ class Login extends Controller
     {
         if ($this->request->isAjax()) {
             $data = input('post.');
+            if ($data['fid'] !== "") {
+                return json(['code' => -1, 'data' => '', 'msg' => '请通过系统好友介绍进行注册！']);
+            }
             $customer = new CustomerModel();
             $customerlog = new CustomerLogModel();
             //生成系统名字
@@ -84,10 +87,8 @@ class Login extends Controller
             if ($res) {
                 $customerlog->save(['uid' => $customer->getLastInsID(), 'create_time' => time(), 'type' => 6]);
                 $award = $award->field('integral')->find();
-                if ($data['fid'] !== "") {
-                    $customer->where('id', $data['fid'])->setInc('integral', $award['integral']);
-                    $customerlog->save(['uid' => $data['fid'], 'from_id' => $customer->getLastInsID(), 'desc' => '好友' . 'wittree_' . $data['tell'] . '注册成功' . '返利' . $award['integral'], 'integral' => $award['integral'], 'create_time' => time(), 'type' => 7]);
-                }
+                $customer->where('id', $data['fid'])->setInc('integral', $award['integral']);
+                $customerlog->save(['uid' => $data['fid'], 'from_id' => $customer->getLastInsID(), 'desc' => '好友' . 'wittree_' . $data['tell'] . '注册成功' . '返利' . $award['integral'], 'integral' => $award['integral'], 'create_time' => time(), 'type' => 7]);
                 return json(['code' => 0, 'data' => '', 'msg' => '注册成功！']);
             } else {
                 return json(['code' => -1, 'data' => '', 'msg' => '注册失败！']);
